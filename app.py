@@ -15,7 +15,15 @@ def search():
 @app.route("/weather_results")
 def results():
     city = request.args.get("city")
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid=ae2660cbfb15ae919e944f013ed49449"
+    city_list = list(city)
+
+    for i in range(len(city_list)):
+        if city_list[i] == " ":
+            city_list[i] = "+"
+    
+    new_str = "".join(city_list)
+
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={new_str}&appid=ae2660cbfb15ae919e944f013ed49449"
     res = requests.get(url)
     json = res.json()
 
